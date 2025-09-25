@@ -24,7 +24,7 @@ class CheckoutController extends Controller
 
         // Redirect ke home jika cart kosong
         if ($cartItems->isEmpty()) {
-            return redirect()->route('/dashboard')->with('error', 'Your cart is empty!');
+            return redirect()->route('dashboard')->with('error', 'Your cart is empty!');
         }
 
         return Inertia::render('checkout', [
