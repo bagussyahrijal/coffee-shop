@@ -14,6 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('items', App\Http\Controllers\ItemController::class);
+    Route::resource('categories', App\Http\Controllers\CategoryController::class);
 });
 
 require __DIR__.'/settings.php';

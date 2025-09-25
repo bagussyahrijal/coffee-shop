@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemRequest;
 use Inertia\Inertia;
@@ -14,9 +15,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::latest()->paginate(10);
+        $items = Item::with('category')->latest()->paginate(10);
+        $categories = Category::all();
         return Inertia::render('items/Index', [
-            'items' => $items
+            'items' => $items,
+            'categories' => $categories
         ]);
     }
 
@@ -25,7 +28,9 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return Inertia::render('items/Create');
+        return Inertia::render('items/Create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**

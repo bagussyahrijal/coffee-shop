@@ -4,7 +4,12 @@ import { Item } from '@/types/item';
 
 export default function Edit() {
     const { item } = usePage().props as any;
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, put, processing, errors } = useForm<{
+        name: string;
+        price: string | number;
+        description: string;
+        image: string;
+    }>({
         name: item.name || '',
         price: item.price || '',
         description: item.description || '',

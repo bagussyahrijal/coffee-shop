@@ -27,7 +27,6 @@ export default function Create() {
             formData.append('image', data.image);
         }
         post('/items', {
-            data: formData,
             forceFormData: true,
             onSuccess: () => {
                 reset();
