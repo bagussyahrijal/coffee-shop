@@ -13,20 +13,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create default user first
-        User::firstOrCreate(
-            ['email' => 'test@example.com'],
-            [
-                'name' => 'Test User',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]
-        );
+        $this->command->info('Starting DatabaseSeeder...');
 
-        // Run category seeder
-        $this->call([
-            ItemCategorySeeder::class,
-            // Add other seeders here if needed
-        ]);
+        try {
+            // Cek apakah user sudah ada
+            if (User::where('email', 'admin@gmail.com')->exists()) {
+                $this->command->info('Admin user already exists!');
+            } else {
+                User::create([
+                    'name' => 'Admin',
+                    'email' => 'admin@gmail.com',
+                    'role' => 'admin',
+                    'password' => Hash::make('password'),
+                    'email_verified_at' => now(),
+                ]);
+                $this->command->info('Admin user created successfully!');
+            }
+
+            // Cek jumlah users
+            $userCount = User::count();
+            $this->command->info("Total users in database: {$userCount}");
+        } catch (\Exception $e) {
+            $this->command->error('Error creating admin user: ' . $e->getMessage());
+        }
+
+        // Comment ItemCategorySeeder untuk sementara
+        // $this->call([
+        //     ItemCategorySeeder::class,
+        // ]);
     }
 }
