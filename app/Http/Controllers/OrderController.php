@@ -24,7 +24,7 @@ class OrderController extends Controller
             ->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->route('home')->with('error', 'Your cart is empty!');
+            return redirect()->route('/dashboard')->with('error', 'Your cart is empty!');
         }
 
         $order = DB::transaction(function () use ($request, $cartItems) {
